@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const express = require('express');
 //Importar un módelo de base de datos
-const {AccountTypes} = require('./models');
+const {AccountTypes,clients} = require('./models');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -17,16 +17,14 @@ app.get("/", (req, res) => {
 });
 
 //Read
-app.get("/account_types", async (req, res) => {
-  let results = await AccountTypes.findAll({ raw: true });
+app.get("/clientes", async (req, res) => {
+  let results = await clients.findAll({ raw: true });
   console.log(results)
- // res.render('account_types', { accountTypes: results });
-  res.render('home')
+  res.send(JSON.stringify(results));
+  //res.render('home')
 });
 
-app.get("/clients", async (req, res) => {
-    res.render('clients');
-});
+
 
 //Create
 app.post("/account_types", async (req, res) => {
