@@ -1,0 +1,160 @@
+{
+    "tables": {
+        "account_types": {
+            "tableName": "account_types",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "name": {
+                    "field": "name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "description": {
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                }
+            },
+            "indexes": []
+        },
+        "accounts": {
+            "tableName": "accounts",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "account_no": {
+                    "field": "account_no",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "client_id": {
+                    "field": "client_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "balance": {
+                    "field": "balance",
+                    "seqType": "Sequelize.DECIMAL"
+                },
+                "type": {
+                    "field": "type",
+                    "allowNull": true,
+                    "references": {
+                        "model": "account_types",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "clients": {
+            "tableName": "clients",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "first_name": {
+                    "field": "first_name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "description": {
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                },
+                "last_name": {
+                    "field": "last_name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "email": {
+                    "field": "email",
+                    "seqType": "Sequelize.STRING"
+                },
+                "telephone": {
+                    "field": "telephone",
+                    "seqType": "Sequelize.STRING"
+                }
+            },
+            "indexes": []
+        },
+        "transactions": {
+            "tableName": "transactions",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "account_ori": {
+                    "field": "account_ori",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "account_des": {
+                    "field": "account_des",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "amount": {
+                    "field": "amount",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "transaction_type": {
+                    "field": "transaction_type",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "trans_date": {
+                    "field": "trans_date",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "transactions_types": {
+            "tableName": "transactions_types",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "name": {
+                    "field": "name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "description": {
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                },
+                "type": {
+                    "field": "type",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "transaction__type": {
+                    "field": "transaction__type",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        }
+    },
+    "path": "/home/lmex89/Documents/Academlo/Node/Ejs/models/_current.json",
+    "backupPath": "/home/lmex89/Documents/Academlo/Node/Ejs/models/_current_bak.json",
+    "exists": true,
+    "revision": 3
+}
