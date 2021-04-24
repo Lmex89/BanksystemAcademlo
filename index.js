@@ -17,23 +17,47 @@ app.get("/", (req, res) => {
 });
 
 //Read
-app.get("/clientes", async (req, res) => {
+app.get("/clientes/get/", async (req, res) => {
   let results = await clients.findAll({ raw: true });
   console.log(results)
   res.send(JSON.stringify(results));
 });
 
-
+app.put("/clientes/update/:id", async (req, res) => {
+    try {
+        const { first_name, description, last_name, email, telephone } = req.body;
+        let results = await clients.findByPk(req.params.id);
+        if (results) {
+            results.first_name = first_name
+            results.description = description;
+            results.last_name = last_name;
+            results.email = email;
+            results.telephone = telephone;
+            results.save();
+            res.send(results)
+        }
+        
+    }
+    catch(error){
+        console.log(error);
+        res.status(400).send("No se ha podido agregar el tipo de cuenta");
+    }
+    
+})
 
 //Create
-app.post("/clientes", async (req, res) => {
+app.post("/clientes/post", async (req, res) => {
     //sacar los datos que me está enviando el cliente
-    const {name, description, created_at, update_at} = req.body; //desestructuración
+    const { first_name, description, last_name, email, telephone } = req.body; //desestructuración
     try{
         //Creamos un registro en la tabla account_types
         let results = await clients.create({first_name, description,last_name,email,telephone});
         //Enviamos un respuesta satisfactoria
-        res.send("Se ha agregado un cliente Nuevo");
+        res.send({
+            msg: "Se ha agregado un cliente Nuevo",
+            sucess: true,
+            results,
+        });
     }catch(error){
         console.log(error);
         res.status(400).send("No se ha podido agregar el tipo de cuenta");
