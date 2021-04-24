@@ -18,8 +18,9 @@
         "pg": "^8.6.0",
         "pg-hstore": "^2.3.3",
         "sequelize": "^6.6.2",
+        "sequelize-cli": "^6.2.0",
         "sequelize-mig": "^2.8.1",
-        "sequelize-cli": "^6.2.0"
+        "standard-engine": "^14.0.1"
     },
     "devDependencies": {
         "nodemon": "^2.0.7",
