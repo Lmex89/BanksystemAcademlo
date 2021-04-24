@@ -6,7 +6,6 @@ const express = require('express');
 const {AccountTypes,clients} = require('./models');
 
 const app = express();
-app.set('view engine', 'ejs');
 //CRUD -> Create, Read, Update y Delete
 //Para poder leer los datos que envía el cliente con el formato URL Encoded
 app.use(express.urlencoded({extended: false}))
