@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 app.get("/clientes", async (req, res) => {
   let results = await clients.findAll({ raw: true });
   console.log(results)
-  res.send(JSON.stringify(re));
+  res.send(JSON.stringify(results));
   //res.render('home')
 });
 
