@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const express = require('express');
 //Importar un módelo de base de datos
-const {AccountTypes,clients} = require('./models');
+const {AccountTypes,clients,accounts} = require('./models');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -36,6 +36,16 @@ app.put("/clientes/update/:id", async (req, res) => {
             results.save();
             res.send(results)
         }
+
+        else {
+            res.send(
+                {
+                    msg: "No existe ese id de cliente",
+                    sucess: false,
+                    results,
+                }
+            )
+        }
         
     }
     catch(error){
@@ -46,7 +56,7 @@ app.put("/clientes/update/:id", async (req, res) => {
 })
 
 //Create
-app.post("/clientes/post", async (req, res) => {
+app.post("/clientes/post/", async (req, res) => {
     //sacar los datos que me está enviando el cliente
     const { first_name, description, last_name, email, telephone } = req.body; //desestructuración
     try{
@@ -63,6 +73,67 @@ app.post("/clientes/post", async (req, res) => {
         res.status(400).send("No se ha podido agregar el tipo de cuenta");
     }
 });
+
+
+//Read
+app.get("/accounts/get/", async (req, res) => {
+  let results = await accounts.findAll({ raw: true });
+  console.log(results)
+  res.send(JSON.stringify(results));
+});
+
+
+app.post("/accounts/post/", async (req, res) => {
+    //sacar los datos que me está enviando el cliente
+    const { account_no, client_id, balance, type } = req.body; //desestructuración
+    try{
+        //Creamos un registro en la tabla account_types
+        let results = await accounts.create({account_no, client_id, balance, type});
+        //Enviamos un respuesta satisfactoria
+        res.send({
+            msg: "Se ha agregado una Cuenta  Nueva",
+            sucess: true,
+            results,
+        });
+    }catch(error){
+        console.log(error);
+        res.status(400).send("No se ha podido agregar el tipo de cuenta");
+    }
+});
+
+
+app.put("/accounts/update/:id", async (req, res) => {
+    try {
+        const { account_no, client_id, balance, type } = req.body; //desestructuración
+        let results = await accounts.findByPk(req.params.id);
+        if (results) {
+            results.account_no = account_no
+            results.client_id = client_id;
+            results.balance = balance;
+            results.type = type;
+            results.created_at = Date.now()
+            results.updated_at = Date.now()
+            results.save();
+            res.send(results)
+        }
+        else {
+            res.send(
+                {
+                    msg: "No existe ese id de cuenta",
+                    sucess: false,
+                    results,
+                }
+            )
+        }
+        
+    }
+    catch(error){
+        console.log(error);
+        res.status(400).send("No se ha podido agregar el tipo de cuenta");
+    }
+    
+})
+
 
 
 const PORT = process.env.PORT || 8080;
