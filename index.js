@@ -21,20 +21,19 @@ app.get("/clientes", async (req, res) => {
   let results = await clients.findAll({ raw: true });
   console.log(results)
   res.send(JSON.stringify(results));
-  //res.render('home')
 });
 
 
 
 //Create
-app.post("/account_types", async (req, res) => {
+app.post("/clientes", async (req, res) => {
     //sacar los datos que me está enviando el cliente
     const {name, description, created_at, update_at} = req.body; //desestructuración
     try{
         //Creamos un registro en la tabla account_types
-        let results = await AccountTypes.create({name, description});
+        let results = await clients.create({first_name, description,last_name,email,telephone});
         //Enviamos un respuesta satisfactoria
-        res.send("Se ha agregado un tipo cuenta");
+        res.send("Se ha agregado un cliente Nuevo");
     }catch(error){
         console.log(error);
         res.status(400).send("No se ha podido agregar el tipo de cuenta");
