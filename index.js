@@ -1,14 +1,15 @@
 //Dos formas para poder utilizar dotenv
 require('dotenv').config();
 
-const express = require('express');
+import express, { urlencoded } from 'express';
 //Importar un módelo de base de datos
-const {AccountTypes,clients} = require('./models');
+import { AccountTypes, clients } from './models';
 
 const app = express();
+app.set('view engine', 'ejs');
 //CRUD -> Create, Read, Update y Delete
 //Para poder leer los datos que envía el cliente con el formato URL Encoded
-app.use(express.urlencoded({extended: false}))
+app.use(urlencoded({extended: false}))
 
 
 app.get("/", (req, res) => {
@@ -19,7 +20,7 @@ app.get("/", (req, res) => {
 app.get("/clientes", async (req, res) => {
   let results = await clients.findAll({ raw: true });
   console.log(results)
-  res.send(JSON.stringify(results));
+  res.send(JSON.stringify(re));
   //res.render('home')
 });
 
