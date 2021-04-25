@@ -75,6 +75,34 @@ app.post("/clientes/post/", async (req, res) => {
 });
 
 
+app.delete("/clientes/delete/:id", async (req, res) => {
+
+    id = req.params.id;
+    try {
+        let client_to_delete = await clients.findByPk(req.params.id);
+        if (client_to_delete) {
+            const response = await client_to_delete.destroy();
+            res.send(response,client_to_delete)
+        }
+        else {
+            res.send(
+                {
+                    msg: "No existe ese id de cliente o ya ha sido eliminado",
+                    sucess: false,
+                   id,
+                }
+            )
+        }
+        
+    }
+    catch(error){
+        console.log(error);
+        res.status(400).send("No se ha podido agregar el tipo de cuenta");
+    }
+    
+})
+
+
 //Read
 app.get("/accounts/get/", async (req, res) => {
   let results = await accounts.findAll({ raw: true });
@@ -134,7 +162,36 @@ app.put("/accounts/update/:id", async (req, res) => {
     
 })
 
-
+app.delete("/accounts/delete/:id", async (req, res) => {
+    _id = req.params.id
+    try {
+        let results = await accounts.findByPk(req.params.id);
+        if (results) {
+            const response = await results.destroy();
+            res.send({
+                msg: "La concuenta ha sido eliminada de manera exitosa",
+                sucess: true,
+                results,
+                response,
+            })
+        }
+        else {
+            res.send(
+                {
+                    msg: "No existe ese id de cuenta",
+                    sucess: false,
+                    _id,
+                }
+            )
+        }
+        
+    }
+    catch(error){
+        console.log(error);
+        res.status(400).send("No se ha podido agregar el tipo de cuenta");
+    }
+    
+})
 
 const PORT = process.env.PORT || 8080;
 
